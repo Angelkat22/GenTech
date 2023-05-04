@@ -1,0 +1,64 @@
+table users {
+  user_id int [pk, increment]
+  created_at timestamp
+  full_name varchar
+  email varchar
+  is_blocked false
+}
+
+table albums {
+  album_id int [pk, increment]
+  created_at timestamp 
+  title varchar
+  artist_id integer
+  imdb_id integer
+}
+
+table artists {
+  artist_id int [pk, increment]
+  created_at timestamp 
+  full_name varchar
+}
+
+table playlists {
+  playlist_id int [pk, increment]
+  created_at timestamp
+  title varchar
+  user_id int
+  track_id int
+}
+
+table tracks {
+  track_id int [pk, increment]
+  created_at timestamp 
+  title varchar
+  artist_id integer
+  album_id int
+  durations_sec int
+  imdb_id integer
+}
+
+table playlists_tracks {
+  user_id int
+  created_at timestamp
+  playlist_id int
+  track_id int
+}
+
+
+
+Ref: "users"."user_id" < "playlists_tracks"."user_id"
+
+Ref: "artists"."artist_id" < "albums"."artist_id"
+
+Ref: "artists"."artist_id" < "tracks"."artist_id"
+
+Ref: "users"."user_id" < "playlists"."user_id"
+
+Ref: "playlists"."track_id" < "tracks"."track_id"
+
+Ref: "albums"."album_id" < "tracks"."album_id"
+
+Ref: "playlists"."playlist_id" < "playlists_tracks"."playlist_id"
+
+Ref: "playlists_tracks"."track_id" < "tracks"."track_id"
